@@ -26,7 +26,9 @@ public class FrontEnd {
 			if (input.equalsIgnoreCase("q")) {
 				if(isQuitValid()) {
 					System.out.println("Thank you for using Dictionary");
-					break;
+				} else {
+					System.out.println("Quitting has been cancelled. Returning to menu.\n");
+					input = "n";
 				}
 			}
 			if (input.equalsIgnoreCase("m")) {		
@@ -69,11 +71,11 @@ public class FrontEnd {
 			case "q":
 				if (isQuitValid()) {
 					System.out.println("Thank you for using Dictionary");
-					break;
 				} else {
 					System.out.println("Quitting has been cancelled. Returning to menu.");
-					break;
+					input = "n";
 				}
+				break;
 		}
 	}
 	
