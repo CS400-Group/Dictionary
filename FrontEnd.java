@@ -92,7 +92,7 @@ public class FrontEnd {
 	 * @return true if input is confirmed to be valid
 	 */
 	public static boolean isValidInput(String input) {
-		String[] validInputs = {"a", "s", "p", "c", "q"};
+		String[] validInputs = {"a", "s", "p", "c", "q", "f"};
 		for (String values : validInputs) {
 			if (values.equalsIgnoreCase(input)) {
 				return true;
@@ -190,13 +190,15 @@ public class FrontEnd {
 	
 	public static void readFile() {
         System.out.println("\nPlease ensure that your file displays word in this form:");
-        System.out.println("\t'word,definition,origin, synonym1, synonym2, ... with one word per line no spaces except in the definition.");
+        System.out.println("\t'word,definition,origin, synonym1, synonym2, ... \n with one word per line no spaces except in the definition.");
         System.out.println("What is the path of the file you wish to add?");
         File file = new File(in.nextLine());
+        //File file = new File("\\Users\\gabeb\\Desktop\\words.txt");
         try {
             Scanner reader = new Scanner(file);
             while (reader.hasNextLine()) {
                 String[] str = reader.nextLine().split(",");
+                System.out.println(str.length);
                 String wordStr = str[0].trim();
                 String definition = str[1].trim();
                 String origin = str[2].trim();
@@ -209,6 +211,7 @@ public class FrontEnd {
                 Word word = new Word(wordStr, definition, origin, synonyms);
                 dictionary.insert(word);
             }
+            System.out.println("done");
             reader.close();
         } 
         catch (FileNotFoundException e) {
