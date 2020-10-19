@@ -11,17 +11,21 @@ public class FrontEnd {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		
 		do {
 			menu();
-			System.out.print("Enter [m] to perform a more actions or [q] to quit: ");
+			if (input.equalsIgnoreCase("q")) {
+				break;
+			}
+			System.out.print("\nEnter [m] to perform more actions or [q] to quit: ");
 			input = in.nextLine();
-			while (!input.equalsIgnoreCase("m") || !input.equalsIgnoreCase("q")) {
+			while (!input.equals("m") && !input.equalsIgnoreCase("q")) {
 				System.out.print("\nInput is invalid, please try again: ");
 				input = in.nextLine();
 			}
+			
 			if (input.equalsIgnoreCase("q")) {
 				if(isQuitValid()) {
+					System.out.println("Thank you for using Dictionary");
 					break;
 				}
 			}
@@ -46,7 +50,7 @@ public class FrontEnd {
 				+ "Enter input here: ");	
 		input = in.nextLine();
 		while (!isValidInput(input)) {
-			System.out.print("\nInput is invalid, please try again: ");
+			System.out.print("Input is invalid, please try again: ");
 			input = in.nextLine();
 		}		
 		switch (input) {
@@ -65,11 +69,14 @@ public class FrontEnd {
 			case "q":
 				if (isQuitValid()) {
 					System.out.println("Thank you for using Dictionary");
+					break;
 				} else {
+					System.out.println("Quitting has been cancelled. Returning to menu.");
 					break;
 				}
 		}
 	}
+	
 	
 	/**
 	 * Determines if an input is valid
@@ -91,14 +98,14 @@ public class FrontEnd {
 	 * @return true if user confirms quitting
 	 */
 	public static boolean isQuitValid() {
-		System.out.println("Are you sure you want to quit? \n"
+		System.out.print("\nAre you sure you want to quit? \n"
 				+ "Enter [y] for yes or [n] for no: ");
-		input = in.nextLine();
-		while (!input.equalsIgnoreCase("y") || !input.equalsIgnoreCase("n")) {
+		String verify = in.nextLine();
+		while (!verify.equalsIgnoreCase("y") && !verify.equalsIgnoreCase("n")) {
 			System.out.print("\nInput is invalid, please try again: ");
-			input = in.nextLine();
+			verify = in.nextLine();
 		}
-		if (input.equalsIgnoreCase("y")) {
+		if (verify.equalsIgnoreCase("y")) {
 			return true; 
 		} else {
 			return false;
@@ -109,14 +116,14 @@ public class FrontEnd {
 	 * Constructs a word object based on user input and adds the word to the dictionary
 	 */
 	public static void addWord() {
-		System.out.println("Adding a word to the dictibonary");
-		System.out.println("Enter the word: ");
+		System.out.println("\nAdding a word to the dictionary");
+		System.out.print("Enter the word: ");
 		String wordStr = in.nextLine();
-		System.out.println("Enter the word's defintion: ");
+		System.out.print("Enter the word's defintion: ");
 		String definition = in.nextLine();
-		System.out.println("Enter the word's origin: ");
+		System.out.print("Enter the word's origin: ");
 		String origin = in.nextLine();
-		System.out.println("Enter the word's synonyms (make sure to seperate synonyms by a space):");
+		System.out.print("Enter the word's synonyms (make sure to seperate synonyms by a space): ");
 		String synonymsStr  = in.nextLine();
 		String[] synonyms = synonymsStr.split(" ");
 		Word word = new Word(wordStr, definition, origin, synonyms);
@@ -128,13 +135,15 @@ public class FrontEnd {
 	 */
 	public static void search() {
 		System.out.println("Searching for word in dictionary: ");
-		System.out.println("Enter word to search for: ");
+		System.out.print("Enter word to search for: ");
 		String wordStr = in.nextLine();
-		if (dictionary.get(wordStr) == null) {
-			System.out.println("That Word Does Not Exist In This Dictionary.");
-		}
-		else { 
+		try {
+			if (dictionary.get(wordStr) != null) {
+				System.out.println("\nWord Found!, search results below: \n");
+			}
 			System.out.println(dictionary.get(wordStr).wordInfo());
+		} catch (NullPointerException e) {
+			System.out.println("Word is not in dictionary.");
 		}
 	}
 	
@@ -142,19 +151,23 @@ public class FrontEnd {
 	 * Prints the dictionary's contents
 	 */
 	public static void print() {
-		System.out.print("Printing the dictionary's contents");
-		dictionary.print();
+		System.out.println("Printing the dictionary's contents:");
+		if (dictionary.size() == 0) {
+			System.out.println("The dictionary is empty");
+		} else {
+			dictionary.print();
+		}
 	}
 	
 	/**
 	 * Clears the dictionary of all words
 	 */
 	public static void clear() {
-		System.out.print("Clearig dictionary's contents");
-		System.out.println("Are you sure you want to clear the dictionary? \n"
+		System.out.println("Clearig dictionary's contents");
+		System.out.print("Are you sure you want to clear the dictionary? \n"
 				+ "Enter [y] for yes or [n] for no: ");
 		input = in.nextLine();
-		while (!input.equalsIgnoreCase("y") || !input.equalsIgnoreCase("n")) {
+		while (!input.equalsIgnoreCase("y") && !input.equalsIgnoreCase("n")) {
 			System.out.print("\nInput is invalid, please try again: ");
 			input = in.nextLine();
 		}

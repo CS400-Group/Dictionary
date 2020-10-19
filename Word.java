@@ -43,10 +43,6 @@ public class Word implements Comparable<Word>{
      * @return String that contains all of the word's data.
 	 */
     public String wordInfo() {
-        System.out.println("here");
-        if (this.equals(null)) {
-            return "This Word Does Not Exist In The Dictionary.";
-        }
         String synoString = "";
         for (String i : synonyms)
             synoString += (i + "  ");
