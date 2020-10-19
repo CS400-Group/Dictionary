@@ -1,4 +1,6 @@
 import java.util.Scanner;
+import java.io.File;
+import java.io.FileNotFoundException;
 
 public class FrontEnd {
 	
@@ -45,6 +47,7 @@ public class FrontEnd {
 		System.out.print("New Dictionary Created: \n"
 				+ "Please input a letter corresponding to one of the following actions. \n"
 				+ "   [a] Add word \n"
+				+ "   [f] Add multiple words from a file"
 				+ "   [s] Search for word \n"
 				+ "   [p] Print dictionary contents \n"
 				+ "   [c] Clear dictionary contents \n"
@@ -58,6 +61,9 @@ public class FrontEnd {
 		switch (input) {
 			case "a": 
 				addWord();
+				break;
+			case "f":
+				readFile();
 				break;
 			case "s":
 				search();
@@ -181,5 +187,34 @@ public class FrontEnd {
 		}
 		
 	}
+	
+	public static void readFile() {
+        System.out.println("\nPlease ensure that your file displays word in this form:");
+        System.out.println("\t'word,definition,origin, synonym1, synonym2, ... with one word per line no spaces except in the definition.");
+        System.out.println("What is the path of the file you wish to add?");
+        File file = new File(in.nextLine());
+        try {
+            Scanner reader = new Scanner(file);
+            while (reader.hasNextLine()) {
+                String[] str = reader.nextLine().split(",");
+                String wordStr = str[0].trim();
+                String definition = str[1].trim();
+                String origin = str[2].trim();
+                String[] synonyms = new String[str.length-3];
+                int count = 0;
+                for (int i = 3; i < str.length; i++) {
+                	synonyms[count] = str[i];
+                	count++;
+                }
+                Word word = new Word(wordStr, definition, origin, synonyms);
+                dictionary.insert(word);
+            }
+            reader.close();
+        } 
+        catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        System.out.println("Your File Was Succesfully Uploaded.");
+    }
 	
 }
