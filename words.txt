@@ -1,9 +1,6 @@
 famous,having a widespread reputation,Latin, famed, notable, illustrious
-angle,the space within two lines or three or more planes diverging from a common point,Latin,
-profit, corner, edge
+angle,the space within two lines or three or more planes diverging from a common point,Latin,profit,corner,edge
 history,the branch of knowledge dealing with past events,Latin, past, yesterday
-key,a small metal instrument specially cut to fit into a lock and move its bolt,English, latchkey, passkey
-
 degree,any of a series of steps or stages, as in a process or course of action,French, amount, scale
 clip,to cut,English, shave, shear, snip
 money,any circulating medium of exchange,Latin, bill, cash
