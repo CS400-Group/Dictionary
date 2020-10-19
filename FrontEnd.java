@@ -1,9 +1,8 @@
-import java.util.Dictionary;
 import java.util.Scanner;
 
 public class FrontEnd {
 	
-	Dictionary dictionary = new Dictionary();
+	static Dictionary dictionary = new Dictionary();
 	private static Scanner in = new Scanner(System.in);
 	private static String input = "";
 	
@@ -65,7 +64,7 @@ public class FrontEnd {
 				clear();
 			case "q":
 				if (isQuitValid()) {
-					System.out.println("Thank you for using Dictionary")
+					System.out.println("Thank you for using Dictionary");
 				} else {
 					break;
 				}
@@ -101,16 +100,15 @@ public class FrontEnd {
 		}
 		if (input.equalsIgnoreCase("y")) {
 			return true; 
-		} else if (input.equalsIgnoreCase("n")) {
+		} else {
 			return false;
 		}
-		
 	}
 	
 	/**
 	 * Constructs a word object based on user input and adds the word to the dictionary
 	 */
-	public void addWord() {
+	public static void addWord() {
 		System.out.println("Adding a word to the dictibonary");
 		System.out.println("Enter the word: ");
 		String wordStr = in.nextLine();
@@ -128,7 +126,7 @@ public class FrontEnd {
 	/**
 	 * Finds and removes a user specified word from the dictionary
 	 */
-	public void removeWord() {
+	public static void removeWord() {
 		System.out.println("Removing a word from dictionary "); 
 		System.out.println("Enter word to be removed: ");
 		String wordStr = in.nextLine();
@@ -136,10 +134,11 @@ public class FrontEnd {
 		dictionary.remove(word);
 		System.out.println("Word succuesfully removed");
 	}
+
 	/**
 	 * Finds a specified word in the dictionary
 	 */
-	public void search() {
+	public static void search() {
 		System.out.println("Searching for word in dictionary: ");
 		System.out.println("Enter word to search for: ");
 		String wordStr = in.nextLine();
@@ -149,7 +148,7 @@ public class FrontEnd {
 	/**
 	 * Prints the dictionary's contents
 	 */
-	public void print() {
+	public static void print() {
 		System.out.print("Printing the dictionary's contents");
 		dictionary.print();
 	}
@@ -157,7 +156,7 @@ public class FrontEnd {
 	/**
 	 * Clears the dictionary of all words
 	 */
-	public void clear() {
+	public static void clear() {
 		System.out.print("Clearig dictionary's contents");
 		System.out.println("Are you sure you want to clear the dictionary? \n"
 				+ "Enter [y] for yes or [n] for no: ");
@@ -174,8 +173,5 @@ public class FrontEnd {
 		}
 		
 	}
-	
-	
-	
 	
 }
