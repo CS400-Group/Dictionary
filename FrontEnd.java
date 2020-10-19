@@ -130,7 +130,12 @@ public class FrontEnd {
 		System.out.println("Searching for word in dictionary: ");
 		System.out.println("Enter word to search for: ");
 		String wordStr = in.nextLine();
-		System.out.println(dictionary.get(wordStr).toString());
+		if (dictionary.get(wordStr) == null) {
+			System.out.println("That Word Does Not Exist In This Dictionary.");
+		}
+		else { 
+			System.out.println(dictionary.get(wordStr).wordInfo());
+		}
 	}
 	
 	/**

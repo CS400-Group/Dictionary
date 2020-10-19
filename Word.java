@@ -36,13 +36,25 @@ public class Word implements Comparable<Word>{
         return this.wordStr.compareTo(word.wordStr);
     }
 
-    @Override
-    public String toString() {
+    /**
+	 * Overrides the toString method so that it prints all of the data
+     * for a word requested by the user. 
+	 * @param none
+     * @return String that contains all of the word's data.
+	 */
+    public String wordInfo() {
+        System.out.println("here");
+        if (this.equals(null)) {
+            return "This Word Does Not Exist In The Dictionary.";
+        }
+        String synoString = "";
+        for (String i : synonyms)
+            synoString += (i + "  ");
         String wordInfo = "Word: ";
         wordInfo += (this.wordStr + "\n");
         wordInfo += ("Definition: " + this.definition + "\n");
         wordInfo += ("Origin: " + this.origin + "\n");
-        wordInfo += ("Synonyms: " + this.synonyms);
+        wordInfo += ("Synonyms: " + synoString);
         return wordInfo;
     }
 

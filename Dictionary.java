@@ -70,11 +70,12 @@ public class Dictionary extends RedBlackTree<Word> {
     }
 
     /**
-	 * Main method, calls programs methods 
-	 * @param args
+	 * Clear method clears the history of the previous dictionary by
+     * setting the dictionary to a whole new RBT
+	 * @param none
 	 */
     public void clear() {
-
+        this.dictionary = new RedBlackTree<Word>();
     }
 
     /**
