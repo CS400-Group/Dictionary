@@ -39,7 +39,6 @@ public class FrontEnd {
 		System.out.print("New Dictionary Created: \n"
 				+ "Please input a letter corresponding to one of the following actions. \n"
 				+ "   [a] Add word \n"
-				+ "   [r] Remove word  \n"
 				+ "   [s] Search for word \n"
 				+ "   [p] Print dictionary contents \n"
 				+ "   [c] Clear dictionary contents \n"
@@ -54,14 +53,15 @@ public class FrontEnd {
 			case "a": 
 				addWord();
 				break;
-			case "r": 
-				removeWord();
 			case "s":
 				search();
+				break;
 			case "p":
 				print();
+				break;
 			case "c":
 				clear();
+				break;
 			case "q":
 				if (isQuitValid()) {
 					System.out.println("Thank you for using Dictionary");
@@ -77,7 +77,7 @@ public class FrontEnd {
 	 * @return true if input is confirmed to be valid
 	 */
 	public static boolean isValidInput(String input) {
-		String[] validInputs = {"a", "r", "s", "p", "c", "q"};
+		String[] validInputs = {"a", "s", "p", "c", "q"};
 		for (String values : validInputs) {
 			if (values.equalsIgnoreCase(input)) {
 				return true;
@@ -123,18 +123,6 @@ public class FrontEnd {
 		dictionary.insert(word);
 	}
 	
-	/**
-	 * Finds and removes a user specified word from the dictionary
-	 */
-	public static void removeWord() {
-		System.out.println("Removing a word from dictionary "); 
-		System.out.println("Enter word to be removed: ");
-		String wordStr = in.nextLine();
-		Word word = dictionary.get(wordStr);
-		dictionary.remove(word);
-		System.out.println("Word succuesfully removed");
-	}
-
 	/**
 	 * Finds a specified word in the dictionary
 	 */
