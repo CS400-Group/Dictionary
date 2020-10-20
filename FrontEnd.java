@@ -1,7 +1,19 @@
+// --== CS400 File Header Information ==--
+// Name: <the name of the team member who wrote the code in this file>
+// Email: <the team member's @wisc.edu email address>
+// Team: IF
+// Role: <the team member's role in your team>
+// TA: Mu Cai
+// Lecturer: <name of the team mate's lecturer>
+
 import java.util.Scanner;
 import java.io.File;
 import java.io.FileNotFoundException;
 
+/**
+ * Front end application of the Dictionary class, allows users to create and interact with a Dictionary object
+ * @author gabeb
+ */
 public class FrontEnd {
 	
 	static Dictionary dictionary = new Dictionary();
@@ -13,25 +25,22 @@ public class FrontEnd {
 	 * @param args
 	 */
 	public static void main(String[] args) {
+		System.out.println("New Dictionary Created: ");
 		do {
-			menu();
+			if (input.equalsIgnoreCase("n") || !isValidInput(input)) {
+				menu();
+			}
 			if (input.equalsIgnoreCase("q")) {
 				break;
 			}
-			System.out.print("\nEnter [m] to perform more actions or [q] to quit: ");
+			System.out.print("\nEnter another menu command, [m] to display the menu or [q] to quit: ");
 			input = in.nextLine();
-			while (!input.equals("m") && !input.equalsIgnoreCase("q")) {
+			while (!input.equals("m") && !input.equalsIgnoreCase("q") && !isValidInput(input)) {
 				System.out.print("\nInput is invalid, please try again: ");
 				input = in.nextLine();
 			}
-			
-			if (input.equalsIgnoreCase("q")) {
-				if(isQuitValid()) {
-					System.out.println("Thank you for using Dictionary");
-				} else {
-					System.out.println("Quitting has been cancelled. Returning to menu.\n");
-					input = "n";
-				}
+			if (isValidInput(input)) {
+				commands(input);
 			}
 			if (input.equalsIgnoreCase("m")) {		
 				System.out.println("Continuing with new command.\n");
@@ -44,10 +53,9 @@ public class FrontEnd {
 	 * Prints a menu of commands for the user to call by entering a letter
 	 */
 	public static void menu() {
-		System.out.print("New Dictionary Created: \n"
-				+ "Please input a letter corresponding to one of the following actions. \n"
+		System.out.print("Please input a letter corresponding to one of the following actions. \n"
 				+ "   [a] Add word \n"
-				+ "   [f] Add multiple words from a file"
+				+ "   [f] Add multiple words from a file \n"
 				+ "   [s] Search for word \n"
 				+ "   [p] Print dictionary contents \n"
 				+ "   [c] Clear dictionary contents \n"
@@ -57,8 +65,16 @@ public class FrontEnd {
 		while (!isValidInput(input)) {
 			System.out.print("Input is invalid, please try again: ");
 			input = in.nextLine();
-		}		
-		switch (input) {
+		}	
+		commands(input);
+	}
+	
+	/**
+	 * Calls commands based on user input
+	 * @param input user's console input that calls various dictionary functions
+	 */
+	public static void commands(String userInput) {
+		switch (userInput) {
 			case "a": 
 				addWord();
 				break;
@@ -76,15 +92,15 @@ public class FrontEnd {
 				break;
 			case "q":
 				if (isQuitValid()) {
-					System.out.println("Thank you for using Dictionary");
+					System.out.println("Thank you for using Dictionary2");
+					input = "q";
 				} else {
 					System.out.println("Quitting has been cancelled. Returning to menu.");
-					input = "n";
+					menu();
 				}
 				break;
 		}
 	}
-	
 	
 	/**
 	 * Determines if an input is valid
@@ -135,7 +151,12 @@ public class FrontEnd {
 		String synonymsStr  = in.nextLine();
 		String[] synonyms = synonymsStr.split(" ");
 		Word word = new Word(wordStr, definition, origin, synonyms);
-		dictionary.insert(word);
+		try {
+			dictionary.insert(word);
+		} catch (IllegalArgumentException e) {
+			System.out.println("No changes made. Word is already in dictionary.");
+		}
+		
 	}
 	
 	/**
@@ -180,25 +201,32 @@ public class FrontEnd {
 			input = in.nextLine();
 		}
 		if (input.equalsIgnoreCase("y")) {
-			dictionary.clear();
-			System.out.println("Dictionary was successfully cleared, size is " + dictionary.size());
+			if (dictionary.size() == 0) {
+				System.out.println("Dictionary is already empty");
+			} else {
+				dictionary.clear();
+				System.out.println("Dictionary was successfully cleared, size is " + dictionary.size());
+			}	
 		} else if (input.equalsIgnoreCase("n")) {
 			System.out.println("Operation cancelled");
 		}
 		
 	}
 	
+	/**
+	 * Reads in a user specified file to add words to the dictionary
+	 */
 	public static void readFile() {
         System.out.println("\nPlease ensure that your file displays word in this form:");
         System.out.println("\t'word,definition,origin, synonym1, synonym2, ... \n with one word per line no spaces except in the definition.");
-        System.out.println("What is the path of the file you wish to add?");
+        System.out.print("What is the path of the file you wish to add?");
         File file = new File(in.nextLine());
-        //File file = new File("\\Users\\gabeb\\Desktop\\words.txt");
+        int added = 0;
+        int total = 0;
         try {
             Scanner reader = new Scanner(file);
-            while (reader.hasNextLine()) {
+            while (reader.hasNextLine()) { 
                 String[] str = reader.nextLine().split(",");
-                System.out.println(str.length);
                 String wordStr = str[0].trim();
                 String definition = str[1].trim();
                 String origin = str[2].trim();
@@ -209,15 +237,27 @@ public class FrontEnd {
                 	count++;
                 }
                 Word word = new Word(wordStr, definition, origin, synonyms);
-                dictionary.insert(word);
+                try {
+        			dictionary.insert(word);
+        			added++;
+        			total++;
+        		} catch (IllegalArgumentException e) {
+        			System.out.println("No changes made. Word is already in dictionary.");
+        			total++;
+        		}
+        		
             }
-            System.out.println("done");
             reader.close();
-        } 
-        catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        System.out.println("Your File Was Succesfully Uploaded.");
+            if (added == total) {
+            	System.out.println(added + " words were sucessfully added");
+            } else {
+            	System.out.println("Error: " + added + " of " + total + " words were added");
+            }
+            
+        } catch (FileNotFoundException e) {
+            System.out.println("File does not exist. Please try again");
+            readFile();
+        }     
     }
 	
 }
