@@ -1,10 +1,10 @@
 // --== CS400 File Header Information ==--
-// Name: <the name of the team member who wrote the code in this file>
-// Email: <the team member's @wisc.edu email address>
+// Name: Gabriel Bohlmann
+// Email: gbohlmann@wisc.edu
 // Team: IF
-// Role: <the team member's role in your team>
+// Role: Front End Developer
 // TA: Mu Cai
-// Lecturer: <name of the team mate's lecturer>
+// Lecturer: Gary Dahl
 
 import java.util.Scanner;
 import java.io.File;
